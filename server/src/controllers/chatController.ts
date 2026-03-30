@@ -34,7 +34,7 @@ export const handleChat = async (req: AuthRequest, res: Response) => {
       },
     });
 
-    const contextList = products.map(p => {
+    const contextList = products.map((p: any) => {
       return `- ${p.name} ($${p.price}): ${p.description}. Category: ${p.category?.name || 'Uncategorized'}. In Stock: ${p.stockCount}`;
     }).join('\n');
 

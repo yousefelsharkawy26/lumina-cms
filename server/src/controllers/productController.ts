@@ -19,7 +19,7 @@ export const getProducts = async (req: Request, res: Response) => {
     const limitNumber = parseInt(limit as string) || 9;
     const skip = (pageNumber - 1) * limitNumber;
 
-    let whereClause: Prisma.ProductWhereInput | any = {};
+    let whereClause: any = {};
     
     if (q && typeof q === 'string') {
       whereClause.OR = [

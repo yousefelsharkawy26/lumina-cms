@@ -40,7 +40,7 @@ export const createStripeCheckoutSession = async (req: AuthRequest, res: Respons
     const stripeLineItems: any[] = [];
 
     items.forEach((clientItem: any) => {
-      const product = dbProducts.find((p) => p.id === clientItem.productId);
+      const product = dbProducts.find((p: any) => p.id === clientItem.productId);
       if (!product) return;
 
       const quantity = clientItem.quantity;
