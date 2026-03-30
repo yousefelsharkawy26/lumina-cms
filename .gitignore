@@ -1,0 +1,6 @@
+node_modules
+.env
+*.log
+compile_errors.txt
+.vscode
+/generated/prisma
