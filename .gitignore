@@ -4,3 +4,6 @@ node_modules
 compile_errors.txt
 .vscode
 /generated/prisma
+.vercel
+.env*.local
+dist
