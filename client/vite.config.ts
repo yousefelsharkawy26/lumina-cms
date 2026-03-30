@@ -15,11 +15,11 @@ export default defineConfig({
     strictPort: true,
     proxy: {
       "/api": {
-        target: "http://localhost:4000",
+        target: "https://lumina-cms-uf6n.vercel.app",
         changeOrigin: true,
       },
       "/uploads": {
-        target: "http://localhost:4000",
+        target: "https://lumina-cms-uf6n.vercel.app",
         changeOrigin: true,
       },
     },
