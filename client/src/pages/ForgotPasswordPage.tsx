@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axiosInstance from "@/lib/axiosInstance";
 import axios from "axios";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +19,7 @@ export const ForgotPasswordPage = () => {
     setError("");
 
     try {
-      await axios.post("/api/users/forgot-password", { email });
+      await axiosInstance.post("/api/users/forgot-password", { email });
       setSuccess(true);
     } catch (err) {
       if (axios.isAxiosError(err)) {
@@ -46,9 +47,12 @@ export const ForgotPasswordPage = () => {
         </div>
 
         <div className="space-y-2 text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight">Forgot Password</h2>
+          <h2 className="text-3xl font-extrabold tracking-tight">
+            Forgot Password
+          </h2>
           <p className="text-muted-foreground text-sm">
-            Enter your email and we'll send you a secure link to reset your password.
+            Enter your email and we'll send you a secure link to reset your
+            password.
           </p>
         </div>
 
@@ -57,7 +61,9 @@ export const ForgotPasswordPage = () => {
             <div className="p-6 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-500/20 text-center flex flex-col items-center gap-3">
               <CheckCircle2 className="w-12 h-12 mb-2" />
               <p className="font-semibold text-lg">Check your inbox</p>
-              <p className="text-sm">We've sent a password reset link to <strong>{email}</strong>.</p>
+              <p className="text-sm">
+                We've sent a password reset link to <strong>{email}</strong>.
+              </p>
             </div>
             <Link to="/login" className="block">
               <Button className="w-full h-12 text-base font-bold rounded-xl shadow-lg">
@@ -72,9 +78,14 @@ export const ForgotPasswordPage = () => {
                 {error}
               </div>
             )}
-            
+
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-sm font-semibold text-foreground/80">Email Address</Label>
+              <Label
+                htmlFor="email"
+                className="text-sm font-semibold text-foreground/80"
+              >
+                Email Address
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -96,14 +107,18 @@ export const ForgotPasswordPage = () => {
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <span className="flex items-center justify-center gap-2">
-                  Send Reset Link <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Send Reset Link{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               )}
             </Button>
 
             <p className="text-center text-sm text-muted-foreground pt-4">
               Remember your password?{" "}
-              <Link to="/login" className="font-bold text-primary hover:underline hover:text-primary/80 transition-colors">
+              <Link
+                to="/login"
+                className="font-bold text-primary hover:underline hover:text-primary/80 transition-colors"
+              >
                 Back to Login
               </Link>
             </p>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link, useLocation } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import {
   ShoppingCart,
   Trash2,
@@ -14,6 +14,7 @@ import { useAuthStore } from "../store/useAuthStore";
 import Button from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getImageUrl } from "@/lib/utils";
 
 export const CartPage = () => {
   const { items, updateQuantity, removeItem, getTotalPrice } = useCartStore();
@@ -35,7 +36,7 @@ export const CartPage = () => {
         quantity: item.quantity,
       }));
 
-      const { data } = await axios.post("/api/orders", { items: payload });
+      const { data } = await axiosInstance.post("/api/orders", { items: payload });
 
       if (data.url) {
         window.location.href = data.url; // Redirect to Stripe
@@ -87,7 +88,7 @@ export const CartPage = () => {
                   className="p-4 rounded-xl flex flex-col sm:flex-row items-center gap-6 border bg-card hover:bg-muted/50 transition-colors"
                 >
                   <img
-                    src={item.imageUrl || "https://via.placeholder.com/150"}
+                    src={getImageUrl(item.imageUrl) || "https://via.placeholder.com/150"}
                     alt={item.name}
                     className="w-24 h-24 object-cover rounded-xl bg-muted"
                   />

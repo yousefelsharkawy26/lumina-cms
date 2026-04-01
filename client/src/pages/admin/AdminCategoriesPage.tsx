@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Loader2, Plus, Trash2 } from "lucide-react";
 import Button from "@/components/ui/button";
@@ -20,7 +20,7 @@ export const AdminCategoriesPage = () => {
 
   const fetchCategories = async () => {
     try {
-      const { data } = await axios.get("/api/categories");
+      const { data } = await axiosInstance.get("/api/categories");
       setCategories(data);
     } catch (error) {
       console.error("Failed to fetch categories", error);
@@ -39,7 +39,7 @@ export const AdminCategoriesPage = () => {
 
     setAdding(true);
     try {
-      const { data } = await axios.post(
+      const { data } = await axiosInstance.post(
         "/api/categories",
         { name: newCatName },
         { headers: { Authorization: `Bearer ${token}` } },
@@ -62,7 +62,7 @@ export const AdminCategoriesPage = () => {
       return;
 
     try {
-      await axios.delete(`/api/categories/${id}`, {
+      await axiosInstance.delete(`/api/categories/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setCategories(categories.filter((c) => c.id !== id));

@@ -1,6 +1,8 @@
+import { getImageUrl } from "./utils";
+
 const isImageExist = async (imageUrl: string) => {
   try {
-    const response = await fetch(`${imageUrl}`, {
+    const response = await fetch(`${getImageUrl(imageUrl)}`, {
       method: "HEAD",
     });
     return response.ok;

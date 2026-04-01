@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Loader2, AlertCircle, Trash2 } from "lucide-react";
 import Button from "@/components/ui/button";
@@ -20,7 +20,7 @@ export const AdminUsersPage = () => {
 
   const fetchUsers = async (authToken: string) => {
     try {
-      const { data } = await axios.get("/api/users", {
+      const { data } = await axiosInstance.get("/api/users", {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setUsers(data);
@@ -39,7 +39,7 @@ export const AdminUsersPage = () => {
 
   const handleRoleChange = async (userId: string, newRole: string) => {
     try {
-      await axios.put(
+      await axiosInstance.put(
         `/api/users/${userId}/role`,
         { role: newRole },
         { headers: { Authorization: `Bearer ${token}` } },
@@ -63,7 +63,7 @@ export const AdminUsersPage = () => {
     }
 
     try {
-      await axios.delete(`/api/users/${userId}`, {
+      await axiosInstance.delete(`/api/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setUsers(users.filter((u) => u.id !== userId));

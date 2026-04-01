@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageCircle, X, Send, Bot, User } from "lucide-react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 
 interface Message {
@@ -39,7 +39,7 @@ export function SmartAssistant() {
     setIsLoading(true);
 
     try {
-      const response = await axios.post("/api/chat", {
+      const response = await axiosInstance.post("/api/chat", {
         message: userMessage,
         history: messages,
       });

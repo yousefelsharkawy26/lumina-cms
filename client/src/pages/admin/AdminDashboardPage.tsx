@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 import { useSettingsStore } from "../../store/useSettingsStore";
 import {
@@ -94,10 +94,10 @@ export const AdminDashboardPage = () => {
     const extractKnowledge = async () => {
       try {
         const [usersRes, ordersRes] = await Promise.all([
-          axios.get("/api/users", {
+          axiosInstance.get("/api/users", {
             headers: { Authorization: `Bearer ${token}` },
           }),
-          axios.get("/api/orders", {
+          axiosInstance.get("/api/orders", {
             headers: { Authorization: `Bearer ${token}` },
           }),
         ]);

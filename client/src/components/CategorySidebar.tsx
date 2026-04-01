@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { cn } from "@/lib/utils";
 import Button from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
@@ -24,7 +24,7 @@ export const CategorySidebar = ({
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get("/api/categories");
+        const { data } = await axiosInstance.get("/api/categories");
         setCategories(data);
       } catch (error) {
         console.error("Failed to fetch categories", error);

@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 
 export interface SystemSettings {
   storeName: string;
@@ -30,7 +30,7 @@ export const useSettingsStore = create<SettingsState>((set) => ({
   error: null,
   fetchSettings: async () => {
     try {
-      const { data } = await axios.get("/api/settings");
+      const { data } = await axiosInstance.get("/api/settings");
       set({ settings: data, loading: false, error: null });
     } catch (err) {
       console.error("Failed to load global store settings:", err);

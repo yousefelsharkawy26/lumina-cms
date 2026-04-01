@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "./store/useAuthStore";
 import { useSettingsStore } from "./store/useSettingsStore";
 import AppRouter from "./router/router";
+import axios from "axios";
 
 // Setup global axios interceptor for JWT
 axios.interceptors.request.use((config) => {
@@ -17,21 +18,27 @@ axios.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
-    
-    if (error.response?.status === 401 && !originalRequest._retry && originalRequest.url !== '/api/users/refresh') {
+
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      originalRequest.url !== "/api/users/refresh"
+    ) {
       originalRequest._retry = true;
       const refreshToken = localStorage.getItem("refreshToken");
-      
+
       if (refreshToken) {
         try {
-          const res = await axios.post("/api/users/refresh", { refreshToken });
-          
+          const res = await axiosInstance.post("/api/users/refresh", {
+            refreshToken,
+          });
+
           if (res.status === 200) {
             localStorage.setItem("token", res.data.token);
             localStorage.setItem("refreshToken", res.data.refreshToken);
-            
+
             originalRequest.headers.Authorization = `Bearer ${res.data.token}`;
-            return axios(originalRequest);
+            return axiosInstance(originalRequest);
           }
         } catch {
           useAuthStore.getState().logout();
@@ -40,9 +47,9 @@ axios.interceptors.response.use(
         useAuthStore.getState().logout();
       }
     }
-    
+
     return Promise.reject(error);
-  }
+  },
 );
 
 function App() {

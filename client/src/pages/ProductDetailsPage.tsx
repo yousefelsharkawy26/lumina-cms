@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { ShoppingCart, ArrowLeft, Star, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { type Product, useCartStore } from "../store/useCartStore";
 import Button from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { getImageUrl } from "@/lib/utils";
 import { ProductReviews } from "../components/ProductReviews";
 import { SimilarProducts } from "../components/SimilarProducts";
 
@@ -20,7 +21,7 @@ export const ProductDetailsPage = () => {
     window.scrollTo(0, 0);
     const fetchProduct = async () => {
       try {
-        const { data } = await axios.get(`/api/products/${id}`);
+        const { data } = await axiosInstance.get(`/api/products/${id}`);
         setProduct(data);
       } catch (err) {
         console.error("Failed to load product", err);
@@ -72,7 +73,7 @@ export const ProductDetailsPage = () => {
         <div className="aspect-square bg-muted rounded-[2rem] overflow-hidden flex items-center justify-center p-8">
           <img
             src={
-              product.imageUrl ||
+              getImageUrl(product.imageUrl) ||
               "https://via.placeholder.com/600?text=No+Image"
             }
             alt={product.name}

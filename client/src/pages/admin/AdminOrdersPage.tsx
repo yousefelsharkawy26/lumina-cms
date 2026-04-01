@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 import { Loader2, AlertCircle } from "lucide-react";
 
@@ -25,7 +25,7 @@ export const AdminOrdersPage = () => {
 
   const fetchOrders = async (authToken: string) => {
     try {
-      const { data } = await axios.get("/api/orders", {
+      const { data } = await axiosInstance.get("/api/orders", {
         headers: { Authorization: `Bearer ${authToken}` },
       });
       setOrders(data);
@@ -44,7 +44,7 @@ export const AdminOrdersPage = () => {
 
   const handleStatusChange = async (orderId: string, newStatus: string) => {
     try {
-      await axios.put(
+      await axiosInstance.put(
         `/api/orders/${orderId}/status`,
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } },

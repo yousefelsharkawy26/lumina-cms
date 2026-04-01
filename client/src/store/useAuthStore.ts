@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 
 interface User {
   id: string;
@@ -39,7 +39,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const res = await axios.get("/api/users/profile", {
+        const res = await axiosInstance.get("/api/users/profile", {
           headers: { Authorization: `Bearer ${token}` },
         });
         set({ user: { ...res.data, token }, isAuthenticated: true, isCheckingAuth: false });

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import axiosInstance from "@/lib/axiosInstance";
 import axios from "axios";
 import { useAuthStore } from "../store/useAuthStore";
 import Button from "@/components/ui/button";
@@ -22,7 +23,7 @@ export const RegisterPage = () => {
   ) => {
     try {
       setLoading(true);
-      const res = await axios.post("/api/users/google", {
+      const res = await axiosInstance.post("/api/users/google", {
         idToken: credentialResponse.credential,
       });
       login(res.data);
@@ -41,7 +42,7 @@ export const RegisterPage = () => {
     setError("");
 
     try {
-      const response = await axios.post("/api/users/register", {
+      const response = await axiosInstance.post("/api/users/register", {
         name,
         email,
         password,

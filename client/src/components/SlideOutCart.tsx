@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { X, ShoppingCart, Trash2, Plus, Minus, ArrowRight } from "lucide-react";
 import Button from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { getImageUrl } from "@/lib/utils";
 
 export const SlideOutCart = () => {
   const {
@@ -87,7 +88,7 @@ export const SlideOutCart = () => {
                       className="flex gap-4 items-center bg-background rounded-xl p-3 border border-border/50 shadow-sm"
                     >
                       <img
-                        src={item.imageUrl || "https://placehold.co/150"}
+                        src={getImageUrl(item.imageUrl) || "https://placehold.co/150"}
                         alt={item.name}
                         className="w-16 h-16 object-cover rounded-md bg-muted"
                       />

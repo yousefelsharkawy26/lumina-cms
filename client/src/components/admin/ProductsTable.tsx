@@ -9,6 +9,7 @@ import {
 import { Edit, Trash2, Package } from "lucide-react";
 import { type Product } from "@/store/useCartStore";
 import Button from "../ui/button";
+import { getImageUrl } from "@/lib/utils";
 
 interface ProductsTableProps {
   products: Product[];
@@ -91,7 +92,7 @@ const ProductsTable = ({
               <TableCell className="font-medium flex items-center gap-4 py-3">
                 <div className="h-12 w-12 rounded-lg border border-border/50 overflow-hidden bg-muted/30 shrink-0">
                   <img
-                    src={product.imageUrl || "https://via.placeholder.com/48"}
+                    src={getImageUrl(product.imageUrl) || "https://via.placeholder.com/48"}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform group-hover:scale-105"
                   />

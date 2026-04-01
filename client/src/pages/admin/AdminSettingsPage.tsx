@@ -14,7 +14,7 @@ import {
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../../store/useAuthStore";
 
 export const AdminSettingsPage = () => {
@@ -54,7 +54,7 @@ export const AdminSettingsPage = () => {
   useEffect(() => {
     const fetchSettings = async () => {
       try {
-        const { data } = await axios.get("/api/settings");
+        const { data } = await axiosInstance.get("/api/settings");
         if (data) {
           setStoreName(data.storeName || "");
           setSupportEmail(data.supportEmail || "");
@@ -88,7 +88,7 @@ export const AdminSettingsPage = () => {
     setSaving(true);
     setSaved(false);
     try {
-      await axios.put(
+      await axiosInstance.put(
         "/api/settings",
         { 
           storeName, supportEmail, currency,

@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
+import axiosInstance from "@/lib/axiosInstance";
 import axios from "axios";
 import Button from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -20,17 +21,22 @@ export const ResetPasswordPage = () => {
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
-    
+
     setLoading(true);
     setError("");
 
     try {
-      await axios.post(`/api/users/reset-password/${token}`, { password });
+      await axiosInstance.post(`/api/users/reset-password/${token}`, {
+        password,
+      });
       setSuccess(true);
-      setTimeout(() => navigate('/login'), 4000);
+      setTimeout(() => navigate("/login"), 4000);
     } catch (err) {
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.message || "Failed to reset password. The link may have expired.");
+        setError(
+          err.response?.data?.message ||
+            "Failed to reset password. The link may have expired.",
+        );
       } else {
         setError("An unexpected error occurred.");
       }
@@ -53,7 +59,9 @@ export const ResetPasswordPage = () => {
         </div>
 
         <div className="space-y-2 text-center">
-          <h2 className="text-3xl font-extrabold tracking-tight">Set New Password</h2>
+          <h2 className="text-3xl font-extrabold tracking-tight">
+            Set New Password
+          </h2>
           <p className="text-muted-foreground text-sm">
             Enter a strong password to secure your account.
           </p>
@@ -64,7 +72,9 @@ export const ResetPasswordPage = () => {
             <div className="p-6 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 rounded-2xl border border-emerald-500/20 text-center flex flex-col items-center gap-3">
               <CheckCircle2 className="w-12 h-12 mb-2" />
               <p className="font-semibold text-lg">Password Updated!</p>
-              <p className="text-sm">You will be redirected to the login page shortly.</p>
+              <p className="text-sm">
+                You will be redirected to the login page shortly.
+              </p>
             </div>
           </div>
         ) : (
@@ -74,10 +84,15 @@ export const ResetPasswordPage = () => {
                 {error}
               </div>
             )}
-            
+
             <div className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="password" className="text-sm font-semibold text-foreground/80">New Password</Label>
+                <Label
+                  htmlFor="password"
+                  className="text-sm font-semibold text-foreground/80"
+                >
+                  New Password
+                </Label>
                 <Input
                   id="password"
                   type="password"
@@ -91,7 +106,12 @@ export const ResetPasswordPage = () => {
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="confirmPassword" className="text-sm font-semibold text-foreground/80">Confirm Password</Label>
+                <Label
+                  htmlFor="confirmPassword"
+                  className="text-sm font-semibold text-foreground/80"
+                >
+                  Confirm Password
+                </Label>
                 <Input
                   id="confirmPassword"
                   type="password"
@@ -115,13 +135,17 @@ export const ResetPasswordPage = () => {
                 <Loader2 className="w-5 h-5 animate-spin" />
               ) : (
                 <span className="flex items-center justify-center gap-2">
-                  Update Password <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  Update Password{" "}
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               )}
             </Button>
-            
+
             <p className="text-center text-sm text-muted-foreground pt-4">
-              <Link to="/login" className="font-bold text-primary hover:underline hover:text-primary/80 transition-colors">
+              <Link
+                to="/login"
+                className="font-bold text-primary hover:underline hover:text-primary/80 transition-colors"
+              >
                 Back to Login
               </Link>
             </p>

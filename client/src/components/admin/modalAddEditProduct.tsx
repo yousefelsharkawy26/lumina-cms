@@ -11,9 +11,10 @@ import { Label } from "../ui/label";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
 import { Loader2 } from "lucide-react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useState, useEffect } from "react";
 import type { Product } from "@/store/useCartStore";
+import { toast } from "sonner";
 
 interface ModalAddEditProductProps {
   open: boolean;
@@ -42,7 +43,7 @@ const ModalAddEditProduct = ({
 
   const fetchCategories = async () => {
     try {
-      const categoriesRes = await axios.get("/api/categories");
+      const categoriesRes = await axiosInstance.get("/api/categories");
       setCategories(categoriesRes.data || []);
     } catch (err) {
       console.error("Failed to load categories", err);
@@ -58,10 +59,11 @@ const ModalAddEditProduct = ({
 
     setUploadingFile(true);
     try {
-      const { data } = await axios.post("/api/upload", formData, {
+      const { data } = await axiosInstance.post("/api/upload", formData, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       setImageUrl(data.imageUrl);
+      toast.success(data.message);
     } catch (err) {
       console.error("Failed to upload image", err);
       alert("Image upload failed. Ensure it is a valid format (jpg, png).");
@@ -105,9 +107,9 @@ const ModalAddEditProduct = ({
       };
 
       if (editingProduct) {
-        await axios.put(`/api/products/${editingProduct.id}`, payload);
+        await axiosInstance.put(`/api/products/${editingProduct.id}`, payload);
       } else {
-        await axios.post("/api/products", payload);
+        await axiosInstance.post("/api/products", payload);
       }
 
       onOpenChange(false);
@@ -121,7 +123,7 @@ const ModalAddEditProduct = ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[800px] max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-200 max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-2xl font-bold">
             {editingProduct ? "Edit Product" : "Add New Product"}

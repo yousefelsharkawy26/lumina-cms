@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import {
   Link,
   useNavigate,
@@ -87,7 +87,7 @@ export const Navbar = () => {
     const delayDebounceFn = setTimeout(async () => {
       if (searchTerm.trim().length > 1) {
         try {
-          const { data } = await axios.get(
+          const { data } = await axiosInstance.get(
             `/api/products?q=${encodeURIComponent(searchTerm)}&limit=5`,
           );
           setSuggestions(data.products || []);

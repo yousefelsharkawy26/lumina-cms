@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../store/useAuthStore";
 import { useSettingsStore } from "../store/useSettingsStore";
 import {
@@ -33,6 +33,7 @@ import {
   ShieldCheck,
 } from "lucide-react";
 import { exportInvoicePDF } from "../lib/exportInvoicePDF";
+import { getImageUrl } from "../lib/utils";
 
 interface OrderItem {
   id: string;
@@ -72,7 +73,7 @@ export const ProfilePage = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const { data } = await axios.get("/api/orders/myorders");
+        const { data } = await axiosInstance.get("/api/orders/myorders");
         setOrders(data);
       } catch (error) {
         console.error("Failed to fetch orders:", error);
@@ -90,7 +91,7 @@ export const ProfilePage = () => {
     setSuccessMessage("");
 
     try {
-      const { data } = await axios.put(
+      const { data } = await axiosInstance.put(
         "/api/users/profile",
         { name, email, password: password || undefined },
         {
@@ -389,7 +390,7 @@ export const ProfilePage = () => {
                                   <img
                                     key={item.id}
                                     src={
-                                      item.product?.imageUrl ||
+                                      getImageUrl(item.product?.imageUrl) ||
                                       "https://via.placeholder.com/40"
                                     }
                                     alt={item.product?.name || "Product"}

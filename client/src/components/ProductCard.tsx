@@ -13,6 +13,7 @@ import {
 import Button from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { isImageExist } from "@/lib/imageHelper";
+import { getImageUrl } from "@/lib/utils";
 import { useEffect, useState } from "react";
 
 interface ProductCardProps {
@@ -35,7 +36,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     setIsCartOpen(true);
   };
 
-  const [imageSrc, setImageSrc] = useState(product.imageUrl);
+  const [imageSrc, setImageSrc] = useState(getImageUrl(product.imageUrl));
 
   useEffect(() => {
     const checkImage = async () => {

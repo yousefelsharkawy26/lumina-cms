@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { type Product } from "@/store/useCartStore";
 import { Plus, Loader2 } from "lucide-react";
 import Button from "@/components/ui/button";
@@ -15,7 +15,7 @@ export const AdminProductsPage = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const productsRes = await axios.get("/api/products?limit=1000");
+      const productsRes = await axiosInstance.get("/api/products?limit=1000");
 
       setProducts(productsRes.data.products || []);
     } catch (err) {
@@ -32,7 +32,7 @@ export const AdminProductsPage = () => {
   const handleDelete = async (id: string) => {
     if (!window.confirm("Delete this product?")) return;
     try {
-      await axios.delete(`/api/products/${id}`);
+      await axiosInstance.delete(`/api/products/${id}`);
       fetchProducts();
     } catch (err) {
       console.error("Failed to delete product", err);

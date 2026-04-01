@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useAuthStore } from "../store/useAuthStore";
 import { Star, MessageSquare } from "lucide-react";
 import Button from "@/components/ui/button";
@@ -32,7 +32,7 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
 
   const fetchReviews = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/api/products/${productId}/reviews`);
+      const { data } = await axiosInstance.get(`/api/products/${productId}/reviews`);
       setReviews(data);
     } catch (err) {
       console.error("Failed to fetch reviews", err);
@@ -53,7 +53,7 @@ export const ProductReviews = ({ productId }: ProductReviewsProps) => {
     setError("");
 
     try {
-      await axios.post(
+      await axiosInstance.post(
         `/api/products/${productId}/reviews`,
         { rating, comment },
         { headers: { Authorization: `Bearer ${token}` } },

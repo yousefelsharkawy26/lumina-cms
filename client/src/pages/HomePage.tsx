@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axiosInstance from "@/lib/axiosInstance";
 import { useSearchParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
 import { ProductFilters } from "../components/ProductFilters";
@@ -31,7 +31,7 @@ export const HomePage = () => {
       setLoading(true);
       setError("");
       try {
-        const { data } = await axios.get("/api/products", {
+        const { data } = await axiosInstance.get("/api/products", {
           params: {
             q: query,
             categoryId,
