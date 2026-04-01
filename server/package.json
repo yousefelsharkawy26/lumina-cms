@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx ts-node src/seed.ts",
-    "postinstall": "prisma generate",
+    "postinstall": "prisma generate & npx ts-node src/seed.ts",
     "build": "tsc -p .",
     "start": "node dist/index.js",
     "dev": "ts-node src/index.ts"
